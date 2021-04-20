@@ -1,40 +1,54 @@
 <html>
 <head>
-       <title>eBay item location - My country only</title>
+       <title>Set eBay default search parameters</title>
        <style>
-               body: { padding: 10px; }
+            body { padding: 10px; }
+			.container { display: flex; align-items: center; justify-content: center }
+      		img { max-width: 100% }
+      		.text { font-size: 12px; padding-left: 20px; padding-right: 20px; }
        </style>
 </head>
 <body style = "min-width:400px; max-width:100%;">
+	<div id="status"></div>
 	<h1>Settings</h1>
 	<form>
-		<input type="radio" id="countryOnlyRadioButton" name="type" title="This option forces eBay to only search for items in your country."> Only search for items in my country<br>
-		<input type="radio" id="regionOnlyRadioButton" name="type" title="This option forces eBay to only search for items in your region, like European Union, North America etc."> Only search for items in my continent region<br>
-		<input type="radio" id="disableRadioButton" name="type" title="No location search override (as if this extension was not installed)."> Disable<br>
+		<h3>Location</h3>
+		<input type="radio" id="countryOnlyRadioButton" name="type" title="This option forces eBay to only search for items in your country."> Only search for items in my country<br/>
+		<input type="radio" id="regionOnlyRadioButton" name="type" title="This option forces eBay to only search for items in your region, like European Union, North America etc."> Only search for items in my continent region<br/>
+		<input type="radio" id="disableRadioButton" name="type" title="No location search override (as if this extension was not installed)."> Disable<br/>
+		<h3>Shipping</h3>
+		<input type="checkbox" id="freeShippingToggle" name="freeShipping" title="Free shipping only"> Free shipping only<br/>
 	</form>
 
 	<h1>Donate</h1>
-	If you find the extension useful, enough to deserve a price tag, please kindly click the PayPal link below for donations.
-	<br><br>
-	<a href="https://www.paypal.me/Mountassir"
-	  target="_blank">
-	  <img src="../icons/external/paypal.png">
-	</a>
-	
+	If you find the extension useful, enough to deserve a price tag, please consider sending a small bitcoin donation to:
+	<br/><br/>
+    <div class="container">
+		<div class="image">
+			<a href="bitcoin:37MkBcV3rV2jvZy6XoqwKAaSzKRtb58Za8"><img src="../icons/external/bitcoin.png"></a>
+		</div>
+		<div class="text">
+			<p><a href="bitcoin:37MkBcV3rV2jvZy6XoqwKAaSzKRtb58Za8">37MkBcV3rV2jvZy6XoqwKAaSzKRtb58Za8</a></p>
+		</div>
+		<div class="image">
+			<a href="bitcoin:37MkBcV3rV2jvZy6XoqwKAaSzKRtb58Za8"><img src="../icons/external/bitcoin-donate-qr-code.png"></a>
+		</div>
+	</div>
+
 	<h1>Share, contribute and report issues</h1>
 	If you find any issue with this extension or have any suggestion, please click the link below to submit your request.
-	<br><br>
-	<a href="https://github.com/mountassir/ebay-search-extention"
+	<br/><br/>
+	<a href="https://github.com/AubreyKilian/ebay-default-search-parameters-extension"
 	  target="_blank">
 	  <img src="../icons/external/github.png">
 	</a>
 
 	<h1>Permissions</h1>
 	<p>
-    <b>storage:</b> Save the user's settings.<br>
+		<b>storage:</b> Save the user's settings.<br/>
+		<!-- <b>activeTab:</b> Adjust active tab behaviour<br/> -->
     </p>
 
-	<div id="status"></div>
 	<script src="../shared/constants.js"></script>
 	<script src="../shared/utils.js"></script>
 	<script src="options.js"></script>

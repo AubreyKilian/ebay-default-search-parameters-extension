@@ -1,8 +1,8 @@
-function isOverrideOptionValid(option)
+function isLocationOverrideOptionValid(option)
 {
-	return (option === OVERRIDE_OPTIONS.COUNTRY_ONLY ||
-		    option === OVERRIDE_OPTIONS.REGION_ONLY ||
-		    option === OVERRIDE_OPTIONS.DISABLE);
+	return (option === LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY ||
+		    option === LOCATION_OVERRIDE_OPTIONS.REGION_ONLY ||
+		    option === LOCATION_OVERRIDE_OPTIONS.DISABLE);
 }
 
 function log(message, messageType)
@@ -29,16 +29,30 @@ function log(message, messageType)
 	}
 }
 
-function getOverrideOptionFromStorage(callBack)
+function getLocationOverrideOptionFromStorage(callBack)
 {
 	getStorage(function(items) {
-		callBack(items.overrideOption);
+		callBack(items.locationOverride);
 	});
 }
 
-function saveOverrideOptionToStorage(overrideOption, callBack)
+function getFreeShippingOverrideOptionFromStorage(callBack)
 {
-	setStorage(STORAGE_KEYS.OVERRIDE_OPTION, overrideOption, function(){
+	getStorage(function(items) {
+		callBack(items.freeShipping);
+	});
+}
+
+function saveLocationOverrideOptionToStorage(overrideOption, callBack)
+{
+	setStorage(STORAGE_KEYS.LOCATION_OVERRIDE_OPTION, overrideOption, function(){
+		callBack();
+	});
+}
+
+function saveFreeShippingOverrideOptionToStorage(overrideOption, callBack)
+{
+	setStorage(STORAGE_KEYS.LOCATION_OVERRIDE_OPTION, overrideOption, function(){
 		callBack();
 	});
 }
