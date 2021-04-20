@@ -1,6 +1,6 @@
 # Set eBay default search parameters
 
-<p align="center"><a href="https://i.imgur.com/Z9iRXCA.jpg" target="_blank"><img src="https://i.imgur.com/Z9iRXCA.jpg" border="0"/></a></p>
+<p align="center"><a href="https://i.imgur.com/Xdnc7tF.png" target="_blank"><img src="https://i.imgur.com/Xdnc7tF.png" border="0"/></a></p>
 
 Update the default search parameters used when searching on eBay with this extension.  
 The following defaults can be changed:
@@ -11,7 +11,7 @@ The following defaults can be changed:
 
 <a href="">Install on chrome from Google web store.</a> TODO
 
-<a href="">Install on firefox from Mozilla Add-ons store</a> TODO
+<!-- <a href="">Install on firefox from Mozilla Add-ons store</a> TODO -->
 
 # Credits
 
