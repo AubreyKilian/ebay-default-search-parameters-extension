@@ -57,8 +57,8 @@ function handleTabUpdate(event)
 	{
 		if(tabId !== undefined)
 		{
-			getLocationOverrideOptionFromStorage(function(currentOverrideOption) {
-				processNewUrl(tabId, newUrl, currentOverrideOption);
+			getStorage(function(items) {
+				processNewUrl(tabId, newUrl, items);
 			});
 		}
 		else
@@ -72,72 +72,75 @@ function handleTabUpdate(event)
 	}
 }
 
-function processNewUrl(tabId, url, overrideOption)
+function processNewUrl(tabId, url, items)
 {
-	if(overrideOption === LOCATION_OVERRIDE_OPTIONS.DISABLE)
+	var urlType = getUrlType(url);
+
+	if(shouldProcessEbayUrl(url, urlType))
 	{
-		log("Location override is disabled, nothing to do here.", MESSAGE_TYPES.DEBUG);
+		var processedUrl = url;
+		var urlChanged = false;
+		// log("Location override value is: " + items.locationOverride, MESSAGE_TYPES.DEBUG);
+
+		if(items.locationOverride === LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY)
+		{
+			if(!optionInUrlNeedsUpdating(url, EBAY_LOCATION_IDENTIFIER))
+			{
+				stopLoading(tabId);
+
+				log("Location not set yet: " + url, MESSAGE_TYPES.DEBUG);
+
+				processedUrl = updateOptionInUrl(url, EBAY_LOCATION_IDENTIFIER, COUNTRY_LOCATION_VALUE);
+
+				urlChanged = true;
+			}
+			else
+			{
+				log("Location already set, nothing to do: " + url, MESSAGE_TYPES.DEBUG);
+			}
+		}
+
+		if(items.locationOverride === LOCATION_OVERRIDE_OPTIONS.REGION_ONLY)
+		{
+			if(!optionInUrlNeedsUpdating(url, EBAY_LOCATION_IDENTIFIER))
+			{
+				stopLoading(tabId);
+
+				log("Location not set yet: " + url, MESSAGE_TYPES.DEBUG);
+
+				processedUrl = updateOptionInUrl(url, EBAY_LOCATION_IDENTIFIER, REGION_LOCATION_VALUE);
+
+				urlChanged = true;
+			}
+			else
+			{
+				log("Location already set, nothing to do here: " + url, MESSAGE_TYPES.DEBUG);
+			}
+		}
+
+		if(items.freeShipping === true) {
+			if(!optionInUrlNeedsUpdating(url, EBAY_FREE_SHIPPING_IDENTIFIER)) {
+				stopLoading(tabId);
+				log("Free shipping not set: " + url);
+				processedUrl = updateOptionInUrl(url, EBAY_FREE_SHIPPING_IDENTIFIER, FREE_SHIPPING_ENABLED_VALUE);
+				urlChanged = true;
+			}
+
+		}
+
+		if(true === urlChanged)
+		{
+			log("Replacing: " + url, MESSAGE_TYPES.DEBUG);
+			log("With: " + processedUrl, MESSAGE_TYPES.DEBUG);
+
+			setTabUrl(tabId, processedUrl);
+		}
 	}
 	else
 	{
-		log("Location override is enabled: " + overrideOption, MESSAGE_TYPES.DEBUG);
-
-		var urlType = getUrlType(url);
-
-		if(shouldProcessEbayUrl(url, urlType))
-		{
-			var processedUrl = url;
-			var urlChanged = false;
-
-			if(overrideOption === LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY)
-			{
-				if(!optionInUrlNeedsUpdating(url, EBAY_LOCATION_IDENTIFIER, COUNTRY_LOCATION_VALUE))
-				{
-					stopLoading(tabId);
-
-					log("Location not set yet: " + url, MESSAGE_TYPES.DEBUG);
-
-					processedUrl = updateOptionInUrl(url, EBAY_LOCATION_IDENTIFIER, COUNTRY_LOCATION_VALUE);
-
-					urlChanged = true;
-				}
-				else
-				{
-					log("Location already set, nothing to do: " + url, MESSAGE_TYPES.DEBUG);
-				}
-			}
-
-			if(overrideOption === LOCATION_OVERRIDE_OPTIONS.REGION_ONLY)
-			{
-				if(!optionInUrlNeedsUpdating(url, EBAY_LOCATION_IDENTIFIER, REGION_LOCATION_VALUE))
-				{
-					stopLoading(tabId);
-
-					log("Location not set yet: " + url, MESSAGE_TYPES.DEBUG);
-
-					processedUrl = updateOptionInUrl(url, EBAY_LOCATION_IDENTIFIER, REGION_LOCATION_VALUE);
-
-					urlChanged = true;
-				}
-				else
-				{
-					log("Location already set, nothing to do here: " + url, MESSAGE_TYPES.DEBUG);
-				}
-			}
-
-			if(true === urlChanged)
-			{
-				log("Replacing: " + url, MESSAGE_TYPES.DEBUG);
-				log("With: " + processedUrl, MESSAGE_TYPES.DEBUG);
-
-				setTabUrl(tabId, processedUrl);
-			}
-		}
-		else
-		{
-			log("Not processing ebay url: " + url, MESSAGE_TYPES.DEBUG);
-		}
+		log("Not processing ebay url: " + url, MESSAGE_TYPES.DEBUG);
 	}
+	// }
 }
 
 function updateOptionInUrl(url, optionIdentifier, value)
@@ -264,9 +267,9 @@ function isEbayBrowseUrl(url)
 	return url.indexOf(EBAY_BROWSE_IDENTIFIER) !== -1;
 }
 
-function optionInUrlNeedsUpdating(url, oprion, value)
+function optionInUrlNeedsUpdating(url, option)
 {
-	return isOptionAlreadySetInUrl(url, oprion) || isAdvancedSearch(url, oprion);
+	return isOptionAlreadySetInUrl(url, option) || isAdvancedSearch(url, option);
 }
 
 function isOptionAlreadySetInUrl(url, oprion)
