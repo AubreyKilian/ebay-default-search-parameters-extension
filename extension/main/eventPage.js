@@ -6,20 +6,29 @@ registerEvents();
 function onInit()
 {
 	log("Initializing.", MESSAGE_TYPES.DEBUG);
-
 	initOptions();
 }
 
 function initOptions() 
 {
-	getOverrideOptionFromStorage(function(currentOverrideOption) {
-		if(!isOverrideOptionValid(currentOverrideOption))
+	getLocationOverrideOptionFromStorage(function(currentLocationOverrideOption) {
+		if(!isLocationOverrideOptionValid(currentLocationOverrideOption))
 		{
-			saveOverrideOptionToStorage(defaultOverride, function(){
-				log("Override option set to default: " + defaultOverride);
+			saveLocationOverrideOptionToStorage(defaultOverride, function(){
+				log("Location override option set to default: " + defaultOverride);
 			});
 		}
 	});
+
+	getFreeShippingOverrideOptionFromStorage(function(currentFreeShippingOverrideOption) {
+		log("Free Shipping is: " + currentFreeShippingOverrideOption);
+		if(currentFreeShippingOverrideOption === undefined) {
+			saveLocationOverrideOptionToStorage(defaultFreeShipping, function(){
+				log("Free Shipping override option set to default: " + defaultFreeShipping);
+			});
+		}
+	});
+
 }
 
 function registerEvents()
@@ -48,13 +57,13 @@ function handleTabUpdate(event)
 	{
 		if(tabId !== undefined)
 		{
-			getOverrideOptionFromStorage(function(currentOverrideOption) {
+			getLocationOverrideOptionFromStorage(function(currentOverrideOption) {
 				processNewUrl(tabId, newUrl, currentOverrideOption);
 			});
 		}
 		else
 		{
-			log("Invalid taId:" + tabId, MESSAGE_TYPES.ERROR);
+			log("Invalid tabId:" + tabId, MESSAGE_TYPES.ERROR);
 		}
 	}
 	else
@@ -65,7 +74,7 @@ function handleTabUpdate(event)
 
 function processNewUrl(tabId, url, overrideOption)
 {
-	if(overrideOption === OVERRIDE_OPTIONS.DISABLE)
+	if(overrideOption === LOCATION_OVERRIDE_OPTIONS.DISABLE)
 	{
 		log("Location override is disabled, nothing to do here.", MESSAGE_TYPES.DEBUG);
 	}
@@ -80,7 +89,7 @@ function processNewUrl(tabId, url, overrideOption)
 			var processedUrl = url;
 			var urlChanged = false;
 
-			if(overrideOption === OVERRIDE_OPTIONS.COUNTRY_ONLY)
+			if(overrideOption === LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY)
 			{
 				if(!optionInUrlNeedsUpdating(url, EBAY_LOCATION_IDENTIFIER, COUNTRY_LOCATION_VALUE))
 				{
@@ -98,7 +107,7 @@ function processNewUrl(tabId, url, overrideOption)
 				}
 			}
 
-			if(overrideOption === OVERRIDE_OPTIONS.REGION_ONLY)
+			if(overrideOption === LOCATION_OVERRIDE_OPTIONS.REGION_ONLY)
 			{
 				if(!optionInUrlNeedsUpdating(url, EBAY_LOCATION_IDENTIFIER, REGION_LOCATION_VALUE))
 				{

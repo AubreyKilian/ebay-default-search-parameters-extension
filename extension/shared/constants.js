@@ -1,18 +1,24 @@
 var shouldLog = true;
 
-var OVERRIDE_OPTIONS =
+var LOCATION_OVERRIDE_OPTIONS =
 {
 	COUNTRY_ONLY: "countryOnlyRadioButton",
 	REGION_ONLY: "regionOnlyRadioButton",
-	DISABLE:  "disableRadioButton"
+	DISABLE: "disableRadioButton"
 };
+
+var TOGGLE_OVERRIDE_OPTIONS = {
+	FREE_SHIPPING: "freeShippingToggle"
+}
 
 var STORAGE_KEYS =
 {
-	OVERRIDE_OPTION: "overrideOption"
+	LOCATION_OVERRIDE_OPTION: "locationOverride",
+	FREE_SHIPPING: "freeShipping"
 };
 
-var defaultOverride = OVERRIDE_OPTIONS.COUNTRY_ONLY;
+var defaultOverride = LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY;
+var defaultFreeShipping = false;
 
 var MESSAGE_TYPES =
 {
@@ -32,7 +38,10 @@ var URL_TYPES =
 var EBAY_URL_IDENTIFIER = "www.ebay.";
 var EBAY_SEARCH_IDENTIFIER = "/sch/";
 var EBAY_BROWSE_IDENTIFIER = "/bn_";
+
 var EBAY_LOCATION_IDENTIFIER = "LH_PrefLoc";
+var EBAY_FREE_SHIPPING_IDENTIFIER = "LH_FS";
+
 var COUNTRY_LOCATION_VALUE = "1";
 var REGION_LOCATION_VALUE = "3";
 var SEARCH_SECONDARY_DELIMITER = "&";

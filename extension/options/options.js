@@ -1,59 +1,83 @@
-log("Settings page loaded.", MESSAGE_TYPES.DEBUG);
+log("Settings page loaded.");
 
-function setOverrideOption(overrideOption) 
+function initDisplayValues() 
 {
-	if (!isOverrideOptionValid(overrideOption)) 
-	{
-		overrideOption = defaultOverride;
+	getLocationOverrideOptionFromStorage(function(currentLocationOverrideOption) {
+		setLocationOverrideOption(currentLocationOverrideOption);
+	});
 
-		saveOverrideOptionToStorage(overrideOption, function(){
-			log("Override option set to default: " + overrideOption);
+	getFreeShippingOverrideOptionFromStorage(function(currentFreeShippingValue) {
+		setFreeShippingOverrideOption(currentFreeShippingValue);
+	});
+}
+
+function setLocationOverrideOption(locationOverrideOption) 
+{
+	if (!isLocationOverrideOptionValid(locationOverrideOption)) 
+	{
+		locationOverrideOption = defaultOverride;
+
+		saveLocationOverrideOptionToStorage(locationOverrideOption, function(){
+			log("Location override option set to: " + locationOverrideOption);
 		});
 	}
 
-	setWidgetChecked(overrideOption, true);
+	setWidgetChecked(locationOverrideOption, true);
 }
 
-function initOptions() 
+function setFreeShippingOverrideOption(freeShippingOverrideOption) 
 {
-	getOverrideOptionFromStorage(function(currentOverrideOption) {
-		setOverrideOption(currentOverrideOption);
+	saveFreeShippingOverrideOptionToStorage(freeShippingOverrideOption, function(){
+		log("Free shipping override option set to: " + freeShippingOverrideOption);
 	});
+
+	setWidgetChecked(TOGGLE_OVERRIDE_OPTIONS.FREE_SHIPPING, freeShippingOverrideOption);
 }
 
 function saveOptions()
 {
-	var overrideOption = getSelectedOverrideOption();
+	var locationOverrideOption = getSelectedLocationOverrideOption();
+	var freeShippingValue = getFreeShippingValue();
+	var optionKey = {};
 
-	if(isOverrideOptionValid(overrideOption))
+	if(isLocationOverrideOptionValid(locationOverrideOption))
 	{
-		var optionKey = {};
-		optionKey[STORAGE_KEYS.OVERRIDE_OPTION] = overrideOption;
-		
-		chrome.storage.sync.set(optionKey, function() {
-			var status = document.getElementById('status');
-			status.textContent = 'Options saved.';
-			setTimeout(function() { status.textContent = ''; }, 750);
-		});
+		optionKey[STORAGE_KEYS.LOCATION_OVERRIDE_OPTION] = locationOverrideOption;
+	}
+
+	if(freeShippingValue !== null) {
+		optionKey[STORAGE_KEYS.FREE_SHIPPING] = freeShippingValue;
+	}
+
+	chrome.storage.sync.set(optionKey, function() {
+		var status = document.getElementById('status');
+		status.textContent = 'Options saved.';
+		setTimeout(function() { status.textContent = ''; }, 1000);
+	});
+}
+
+function getSelectedLocationOverrideOption()
+{
+	if(isWidgetChecked(LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY))
+	{
+		return LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY;
+	}
+
+	if(isWidgetChecked(LOCATION_OVERRIDE_OPTIONS.REGION_ONLY))
+	{
+		return LOCATION_OVERRIDE_OPTIONS.REGION_ONLY;
+	}
+
+	if(isWidgetChecked(LOCATION_OVERRIDE_OPTIONS.DISABLE))
+	{
+		return LOCATION_OVERRIDE_OPTIONS.DISABLE;
 	}
 }
 
-function getSelectedOverrideOption()
+function getFreeShippingValue()
 {
-	if(isWidgetChecked(OVERRIDE_OPTIONS.COUNTRY_ONLY))
-	{
-		return OVERRIDE_OPTIONS.COUNTRY_ONLY;
-	}
-
-	if(isWidgetChecked(OVERRIDE_OPTIONS.REGION_ONLY))
-	{
-		return OVERRIDE_OPTIONS.REGION_ONLY;
-	}
-
-	if(isWidgetChecked(OVERRIDE_OPTIONS.DISABLE))
-	{
-		return OVERRIDE_OPTIONS.DISABLE;
-	}
+	var freeShippingValue = isWidgetChecked(TOGGLE_OVERRIDE_OPTIONS.FREE_SHIPPING);
+	return freeShippingValue;
 }
 
 function isWidgetChecked(widgetId)
@@ -73,7 +97,8 @@ function setWidgetChecked(widgetId, checked)
 	}
 }
 
-document.addEventListener('DOMContentLoaded', initOptions);
-document.getElementById(OVERRIDE_OPTIONS.COUNTRY_ONLY).addEventListener('click', saveOptions);
-document.getElementById(OVERRIDE_OPTIONS.REGION_ONLY).addEventListener('click', saveOptions);
-document.getElementById(OVERRIDE_OPTIONS.DISABLE).addEventListener('click',  saveOptions);
+document.addEventListener('DOMContentLoaded', initDisplayValues);
+document.getElementById(LOCATION_OVERRIDE_OPTIONS.COUNTRY_ONLY).addEventListener('click', saveOptions);
+document.getElementById(LOCATION_OVERRIDE_OPTIONS.REGION_ONLY).addEventListener('click', saveOptions);
+document.getElementById(LOCATION_OVERRIDE_OPTIONS.DISABLE).addEventListener('click', saveOptions);
+document.getElementById(TOGGLE_OVERRIDE_OPTIONS.FREE_SHIPPING).addEventListener('click', saveOptions);
