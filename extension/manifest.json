@@ -43,8 +43,7 @@
   "permissions": [
     "webNavigation",
     "storage",
-    "http://*/*",
-    "https://*/*"
+    "activeTab"
   ],
   "incognito": "split",
   "minimum_chrome_version" : "22"
