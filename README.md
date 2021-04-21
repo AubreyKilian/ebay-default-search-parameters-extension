@@ -1,4 +1,4 @@
-# Set eBay default search parameters
+# Set ebay default search parameters
 
 <p align="center"><a href="https://i.imgur.com/Xdnc7tF.png" target="_blank"><img src="https://i.imgur.com/Xdnc7tF.png" border="0"/></a></p>
 

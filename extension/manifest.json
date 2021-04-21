@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
-  "name": "Set eBay default search parameters",
+  "name": "Set ebay default search parameters",
   "author": "Aubrey Kilian : aubreykilian@gmail.com",
   "homepage_url": "https://github.com/AubreyKilian/ebay-default-search-parameters-extension",
   "version": "1.0",
 
-  "description": "Always start your eBay search for items with your specified default filters.",
+  "description": "Always start your ebay search for items with your specified default filters.",
   "icons": {
             "16":  "icons/main/icon-16.png",
             "19":  "icons/main/icon-19.png",
