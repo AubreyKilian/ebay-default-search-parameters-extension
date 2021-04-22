@@ -9,7 +9,7 @@ The following defaults can be changed:
 * Free Shipping toggle
 * More to come...  Please request via github issues.
 
-<a href="">Install on chrome from Google web store.</a> TODO
+<a href="https://chrome.google.com/webstore/detail/set-ebay-default-search-p/dnokkfoaoienakajmgbdpclnnemjdije">Install on chrome from Google web store.</a>
 
 <!-- <a href="">Install on firefox from Mozilla Add-ons store</a> TODO -->
 
