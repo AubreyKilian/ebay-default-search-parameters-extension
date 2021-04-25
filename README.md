@@ -1,12 +1,20 @@
-# eBay item location - My country only
+# Set ebay default search parameters
 
-<p align="center"><a href="https://i.imgur.com/Z9iRXCA.jpg" target="_blank"><img src="https://i.imgur.com/Z9iRXCA.jpg" border="0"/></a></p>
-As a frequent eBay user, I almost always found myself starting my search by first setting the filter for items in my location only. Despite the long running feedback from many users on the need for the stickiness of item location preference, eBay has yet to provide a solution. 
+<p align="center"><a href="https://i.imgur.com/Xdnc7tF.png" target="_blank"><img src="https://i.imgur.com/Xdnc7tF.png" border="0"/></a></p>
 
-To facilitate a more efficient search, I designed an extension that defaults my eBay searches to only items in my location. It has saved me a lot of time and has been serving me very well so I'm publishing the extension for everyone's use.
+Update the default search parameters used when searching on eBay with this extension.  
+The following defaults can be changed:
 
+* Filter item location to local country or region only
+* Free Shipping toggle
+* More to come...  Please request via github issues.
 
-<a href="https://chrome.google.com/webstore/detail/ebay-item-location-my-cou/efhmejgmpncbkkofodbkcgmmflmjbmbo">Install on chrome from Google web store.</a>
+<a href="https://chrome.google.com/webstore/detail/set-ebay-default-search-p/dnokkfoaoienakajmgbdpclnnemjdije">Install on chrome from Google web store.</a>
 
-<a href="https://addons.mozilla.org/en-GB/firefox/addon/ebay-search-my-country-only/?src=search">Install on firefox from Mozilla Add-ons store</a>
+<a href="#">Install on firefox from Mozilla Add-ons store</a> TODO
 
+# Credits
+
+Forked from <a href="https://github.com/mountassir/ebay-search-extention">mountassir/ebay-search-extention</a> - with thanks.
+
+<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
