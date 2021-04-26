@@ -18,3 +18,7 @@ The following defaults can be changed:
 Forked from <a href="https://github.com/mountassir/ebay-search-extention">mountassir/ebay-search-extention</a> - with thanks.
 
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
+# Appreciation
+
+If you like what you see, buy me a coffee?  [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B64FCLO)
